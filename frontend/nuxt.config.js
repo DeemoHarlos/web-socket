@@ -68,7 +68,7 @@ export default {
     // module options
     sockets: [{
       name: 'main',
-      url: 'http://localhost:3001',
+      url: 'http://cloud.harlos.me:3001',
     }],
   },
 }
