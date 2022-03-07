@@ -60,6 +60,10 @@ export default {
   build: {
   },
 
+  generate: {
+    dir: '../docs',
+  },
+
   io: {
     // module options
     sockets: [{
