@@ -27,16 +27,20 @@ io.on('connection', socket => {
 
   socket.on(ClientEvent.SendMessage, (data: SendMessage.data) => {
     const user = users.find(u => u.socketId === socket.id)
-    const username = user?.username.replace(/\W/g, '').slice(0, 32)
+    const username = user?.username
+    let message = data
+    if (!message) return
+    if (message.length > 100) message = message.slice(0, 100)
+    message = message.trim()
     io.emit(ServerEvent.BroadcastMessage, {
       username: username || '?',
-      message: data,
+      message,
     } as BroadcastMessage.data)
   })
 
   socket.on(ClientEvent.SetUsername, (data: SetUsername.data) => {
     const user = users.find(u => u.username === data)
-    if (user) socket.emit('error', {
+    if (user && user.socketId !== socket.id) socket.emit('error', {
       error: ErrorType.UsernameAlreadyUsed,
     })
     else {
