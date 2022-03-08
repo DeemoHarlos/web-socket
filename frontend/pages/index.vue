@@ -9,8 +9,10 @@
       div.btn.btn-warning(@click="onUsernameClick") {{ username }}
       input.flex-fill(type="text" v-model="msg" @change="onTextChange")
       button.btn.btn-primary(type="button" @click="sendMessage") SEND
-    #username-prompt.position-fixed.d-flex.middle-center.w-100.vh-100(v-if="showUsernamePrompt")
-      .bg-light.p-4
+    #username-prompt.position-fixed.d-flex.middle-center.w-100.vh-100(
+      v-if="showUsernamePrompt"
+    )
+      .bg-secondary.rounded.p-4
         div Please enter your username
         form.flex-row(@submit="setUsername")
           input.flex-fill(type="text" v-model="newUsername")
