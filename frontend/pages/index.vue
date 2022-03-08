@@ -2,7 +2,7 @@
   .flex-column.vh-100.bg-dark.text-light
     #messages.flex-fill(ref="messagesContainer")
       #messages-wrap.flex-column.px-3.py-2
-        .message.flex-row.text-break.my-1(v-for="message in messages")
+        .message.text-break.my-1(v-for="message in messages")
           span.text-warning.mr-2: b {{ message.username }}
           span {{ message.message }}
     form.flex-row.p-2.bg-secondary(@submit="sendMessage")
