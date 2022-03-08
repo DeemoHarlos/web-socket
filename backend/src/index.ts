@@ -39,14 +39,19 @@ io.on('connection', socket => {
   })
 
   socket.on(ClientEvent.SetUsername, (data: SetUsername.data) => {
-    const user = users.find(u => u.username === data)
-    if (user && user.socketId !== socket.id) socket.emit('error', {
-      error: ErrorType.UsernameAlreadyUsed,
-    })
-    else {
-      const username = data.replace(/\W/g, '').slice(0, 32)
-      users.push({ username, socketId: socket.id })
+    const otherUser = users.find(u => u.username === data)
+    if (otherUser) {
+      socket.emit('error', {
+        error: ErrorType.UsernameAlreadyUsed,
+      })
+      return
     }
+    const thisUser = users.find(u => u.socketId === socket.id)
+    const username = data.replace(/\W/g, '').slice(0, 32)
+    if (thisUser && thisUser.socketId === socket.id)
+      thisUser.username = username
+    else
+      users.push({ username, socketId: socket.id })
   })
 
   socket.on('disconnect', _reason => {
